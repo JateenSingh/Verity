@@ -10,6 +10,7 @@ using Verity.Api.Auth;
 using Verity.Api.ErrorHandling;
 using Verity.Application.Abstractions;
 using Verity.Infrastructure;
+using Scalar.AspNetCore;
 using Verity.Infrastructure.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -105,7 +106,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod());
 });
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -117,6 +117,9 @@ app.UseStatusCodePages();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference(options => options
+        .WithTitle("Verity API")
+        .WithDefaultHttpClient(ScalarTarget.JavaScript, ScalarClient.Fetch));
 }
 
 app.UseHttpsRedirection();

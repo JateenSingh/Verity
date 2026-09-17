@@ -20,6 +20,7 @@ This builds and starts Postgres, the API and the web client, applies migrations,
 
 - Web: <http://localhost:4200>
 - API: <http://localhost:5080/api/v1>
+- Swagger UI: <http://localhost:5080/scalar/v1>
 - OpenAPI document: <http://localhost:5080/openapi/v1.json>
 
 ### Seed accounts
