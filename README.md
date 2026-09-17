@@ -16,13 +16,7 @@ A self-hosted, auditable forum for partner and engineering collaboration, with c
 docker compose up --build
 ```
 
-Before the first run, copy `.env.example` to `.env` and set `SEED_PASSWORD` to the value shared with you separately - `docker compose up` reads it and refuses to start without it.
-
-```bash
-cp .env.example .env
-```
-
-This builds and starts Postgres, the API and the web client, applies migrations, and seeds the database automatically on first run.
+This builds and starts Postgres, the API and the web client, applies migrations, and seeds the database automatically on first run. No setup step is required — every setting has a local development default, all of them overridable via a `.env` file (see [`.env.example`](.env.example) and [Environment variables](#environment-variables)).
 
 - Web: <http://localhost:4200>
 - API: <http://localhost:5080/api/v1>
@@ -30,17 +24,9 @@ This builds and starts Postgres, the API and the web client, applies migrations,
 
 ### Seed accounts
 
-Password for every seeded account is the value you set as `SEED_PASSWORD` (see above) - it is not committed to this repository.
+The seeder creates seven demo accounts — two moderators and five regular users — sharing one password taken from `SEED_PASSWORD`. The usernames are defined in [`DbSeeder.cs`](backend/src/Verity.Infrastructure/Seed/DbSeeder.cs) and the default password in [`.env.example`](.env.example). Sign in as a moderator to exercise the tagging flows, or as a regular user for the standard experience; one regular user deliberately has no posts, which exercises the empty author-filter case.
 
-| Username | Role | Notes |
-|---|---|---|
-| `mod_alice` | Moderator | Demo moderator login |
-| `mod_bob` | Moderator | Second moderator, so "tagged by" varies |
-| `jateen` | User | Author with the most posts; demo regular login |
-| `partner_acme` | User | Represents an integration partner |
-| `partner_globex` | User | Second partner |
-| `sipho` | User | Regular user |
-| `naledi` | User | Zero posts — exercises the empty author-filter case |
+These accounts are throwaway fixtures for a local database. Seeding only runs against an empty database, so changing `SEED_PASSWORD` after the first run requires `docker compose down -v` to take effect.
 
 ## Developer run
 
@@ -48,7 +34,7 @@ Run Postgres in Docker, everything else with your own tooling (faster iteration 
 
 ```bash
 docker compose up postgres -d
-cd backend && SEED__PASSWORD=<value shared with you separately> dotnet run --project src/Verity.Api
+cd backend && dotnet run --project src/Verity.Api
 ```
 
 In a second terminal:
@@ -72,8 +58,17 @@ Both the container port (5000) and macOS's AirPlay Receiver collide on many mach
 | `Jwt__Issuer`, `Jwt__Audience` | API | `verity-api` / `verity-clients` | JWT validation |
 | `Cors__AllowedOrigins__0` | API | `http://localhost:4200` | Allowed web-client origin |
 | `Seed__Enabled` | API | `true` in Development/Docker | Runs the seeder on startup (idempotent — skips if any user exists) |
-| `Seed__Password` | API | *none — required* | Password hashed into every seeded demo account; value shared with you separately, never committed |
+| `Seed__Password` | API | dev-only value in `appsettings.Development.json` | Password hashed into every seeded demo account — **override this for any real deployment** |
 | `RateLimiting__Auth__PermitLimit` | API | `10` (falls back to this if unset) | Requests/minute per IP on `/auth/*` |
+
+The following are read by `docker-compose.yml` only, from a local `.env` file (see [`.env.example`](.env.example)). Postgres reads its credentials when the data volume is first created, so changing them later requires `docker compose down -v`.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SEED_PASSWORD` | see [`.env.example`](.env.example) | Sets `Seed__Password` for the API container |
+| `POSTGRES_DB` | `verity` | Database name, used by Postgres, the healthcheck and the API connection string |
+| `POSTGRES_USER` | see [`.env.example`](.env.example) | Database user, same three places |
+| `POSTGRES_PASSWORD` | see [`.env.example`](.env.example) | Database password, same three places |
 
 ## Running tests
 

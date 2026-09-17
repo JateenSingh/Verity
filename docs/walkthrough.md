@@ -10,9 +10,9 @@
 1. `docker compose up --build` from a clean clone → one command, seeded forum at `localhost:4200`.
 2. Anonymous browse: filter by date range and author, sort by like count, page through results.
 3. Open a post → comments, like count, tags all visible without logging in.
-4. Log in as `jateen` (seeded regular user) → create a post, comment on it, like someone else's post (optimistic UI updates instantly, confirmed by the server response).
+4. Log in as a seeded regular user → create a post, comment on it, like someone else's post (optimistic UI updates instantly, confirmed by the server response).
 5. Self-like blocked: try liking your own post → disabled button with a tooltip, and the API itself returns 403 if forced directly.
-6. Log in as `mod_alice` (seeded moderator) → flag a post as misleading/false with a reason, filter the list by that tag, remove the flag.
+6. Log in as a seeded moderator → flag a post as misleading/false with a reason, filter the list by that tag, remove the flag.
 
 ## 3. Backend decisions (3 min)
 

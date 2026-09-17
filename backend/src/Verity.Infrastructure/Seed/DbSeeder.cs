@@ -24,7 +24,7 @@ public sealed class DbSeeder(VerityDbContext db, IPasswordHasher hasher, IClock 
 
         var sharedPassword = configuration["Seed:Password"]
             ?? throw new InvalidOperationException(
-                "Seed:Password is not configured. Set the SEED__PASSWORD environment variable (shared separately) before seeding.");
+                "Seed:Password is not configured. Set it in configuration or via the SEED__PASSWORD environment variable before seeding.");
 
         var rng = new Random(RandomSeed);
         var now = clock.UtcNow;
