@@ -1,0 +1,67 @@
+@switch (status()) {
+  @case ('loading') {
+    <div class="post-detail__loading" aria-busy="true">
+      <app-spinner label="Loading post" />
+    </div>
+  }
+  @case ('error') {
+    <app-alert
+      [title]="error()?.title ?? 'Something went wrong'"
+      [detail]="error()?.detail"
+      [showRetry]="true"
+      (retry)="onRetry()"
+    />
+  }
+  @default {
+    @if (post(); as p) {
+      <article class="post-detail">
+        <h1>{{ p.title }}</h1>
+
+        @if (p.tags.length > 0) {
+          <div class="post-detail__tags">
+            @for (tag of p.tags; track tag.tag) {
+              <app-tag-badge [tag]="tag" />
+            }
+          </div>
+        }
+
+        <div class="post-detail__meta">
+          <span>{{ p.author.username }}</span>
+          <span aria-hidden="true">&middot;</span>
+          <span>{{ p.createdAt | relativeDate }}</span>
+        </div>
+
+        <p class="post-detail__body">{{ p.body }}</p>
+
+        <div class="post-detail__actions">
+          <app-like-button
+            [liked]="p.viewerHasLiked"
+            [count]="p.likeCount"
+            [disabled]="likeDisabled()"
+            [disabledReason]="likeDisabledReason()"
+            [pending]="likePending()"
+            (toggle)="onToggleLike()"
+          />
+          <span class="post-detail__comment-count">{{ p.commentCount }} {{ p.commentCount === 1 ? 'comment' : 'comments' }}</span>
+
+          @if (authStore.isModerator()) {
+            <app-tag-control [tagged]="isTagged()" [pending]="tagPending()" (tag)="onTag($event)" (untag)="onUntag()" />
+          }
+        </div>
+      </article>
+
+      <h2>Comments</h2>
+
+      @if (authStore.isAuthenticated()) {
+        <app-comment-form [pending]="commentPending()" (submitComment)="onSubmitComment($event)" />
+      }
+
+      <app-comment-list
+        [comments]="comments()"
+        [page]="commentsPage()"
+        [totalPages]="commentsTotalPages()"
+        (pageChange)="onCommentsPageChange($event)"
+      />
+    }
+  }
+}
