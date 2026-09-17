@@ -1,0 +1,22 @@
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.like-button--liked {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}

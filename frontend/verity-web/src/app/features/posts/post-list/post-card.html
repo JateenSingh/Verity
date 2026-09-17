@@ -1,0 +1,23 @@
+<article class="post-card">
+  <a class="post-card__title" [routerLink]="['/posts', post().id]">{{ post().title }}</a>
+
+  <p class="post-card__excerpt">{{ post().excerpt }}</p>
+
+  @if (post().tags.length > 0) {
+    <div class="post-card__tags">
+      @for (tag of post().tags; track tag.tag) {
+        <app-tag-badge [tag]="tag" />
+      }
+    </div>
+  }
+
+  <div class="post-card__meta">
+    <span>{{ post().author.username }}</span>
+    <span aria-hidden="true">&middot;</span>
+    <span>{{ post().createdAt | relativeDate }}</span>
+    <span aria-hidden="true">&middot;</span>
+    <span>{{ post().likeCount }} {{ post().likeCount === 1 ? 'like' : 'likes' }}</span>
+    <span aria-hidden="true">&middot;</span>
+    <span>{{ post().commentCount }} {{ post().commentCount === 1 ? 'comment' : 'comments' }}</span>
+  </div>
+</article>

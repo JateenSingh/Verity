@@ -1,0 +1,16 @@
+@if (tagged()) {
+  <button type="button" class="tag-control__remove" [disabled]="pending()" (click)="untag.emit()">
+    {{ pending() ? 'Removing…' : 'Remove flag' }}
+  </button>
+} @else if (reasonOpen()) {
+  <form class="tag-control__reason" [formGroup]="form" (ngSubmit)="confirmTag()">
+    <label for="tagReason">Reason (optional)</label>
+    <input id="tagReason" type="text" formControlName="reason" maxlength="500" />
+    <div class="tag-control__actions">
+      <button type="submit" [disabled]="pending()">{{ pending() ? 'Flagging…' : 'Confirm' }}</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+} @else {
+  <button type="button" class="tag-control__flag" (click)="openReason()">Flag as misleading or false</button>
+}

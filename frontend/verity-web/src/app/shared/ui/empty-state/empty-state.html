@@ -1,0 +1,6 @@
+<div class="empty-state">
+  <p>{{ message() }}</p>
+  @if (actionLabel()) {
+    <button type="button" class="empty-state__action" (click)="action.emit()">{{ actionLabel() }}</button>
+  }
+</div>

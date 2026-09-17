@@ -1,0 +1,6 @@
+<form class="comment-form" [formGroup]="form" (ngSubmit)="submit()">
+  <label for="commentBody" class="comment-form__label">Add a comment</label>
+  <textarea id="commentBody" formControlName="body" rows="3" maxlength="4000"></textarea>
+  <app-validation-message [control]="form.controls.body" />
+  <button type="submit" [disabled]="pending()">{{ pending() ? 'Posting…' : 'Post comment' }}</button>
+</form>

@@ -1,0 +1,9 @@
+<div class="alert" role="alert" tabindex="-1" #alertEl>
+  <p class="alert__title">{{ title() }}</p>
+  @if (detail()) {
+    <p class="alert__detail">{{ detail() }}</p>
+  }
+  @if (showRetry()) {
+    <button type="button" class="alert__retry" (click)="retry.emit()">Retry</button>
+  }
+</div>

@@ -1,0 +1,24 @@
+<div class="post-create">
+  <h1>New post</h1>
+
+  @if (formError()) {
+    <p class="post-create__error" role="alert">{{ formError()?.title }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="post-create__field">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" />
+      <app-validation-message [control]="form.controls.title" />
+    </div>
+
+    <div class="post-create__field">
+      <label for="body">Body</label>
+      <textarea id="body" formControlName="body" rows="10" maxlength="10000"></textarea>
+      <div class="post-create__char-count">{{ form.controls.body.value.length }} / 10000</div>
+      <app-validation-message [control]="form.controls.body" />
+    </div>
+
+    <button type="submit" [disabled]="submitting()">{{ submitting() ? 'Posting…' : 'Post' }}</button>
+  </form>
+</div>
