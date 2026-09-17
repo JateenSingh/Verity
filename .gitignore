@@ -22,6 +22,11 @@ npm-debug.log*
 *.swp
 .DS_Store
 
+# --- Postman local sync ---
+docs/postman/.postman/
+docs/postman/postman/
+docs/postman/Verity API v1/
+
 # --- Test / coverage ---
 coverage/
 TestResults/
