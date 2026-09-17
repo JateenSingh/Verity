@@ -1,0 +1,46 @@
+<form class="filters" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="filters__field">
+    <label for="dateFrom">From</label>
+    <input id="dateFrom" type="date" formControlName="dateFrom" />
+  </div>
+
+  <div class="filters__field">
+    <label for="dateTo">To</label>
+    <input id="dateTo" type="date" formControlName="dateTo" />
+  </div>
+
+  <div class="filters__field">
+    <label for="author">Author</label>
+    <input id="author" type="text" formControlName="author" placeholder="username" />
+  </div>
+
+  <div class="filters__field">
+    <label for="tagOption">Tag</label>
+    <select id="tagOption" formControlName="tagOption">
+      <option value="any">Any</option>
+      <option value="MisleadingOrFalse">Misleading or false</option>
+      <option value="untagged">Untagged</option>
+    </select>
+  </div>
+
+  <div class="filters__field">
+    <label for="sortBy">Sort by</label>
+    <select id="sortBy" formControlName="sortBy">
+      <option value="createdAt">Date</option>
+      <option value="likeCount">Likes</option>
+    </select>
+  </div>
+
+  <div class="filters__field">
+    <label for="sortDirection">Direction</label>
+    <select id="sortDirection" formControlName="sortDirection">
+      <option value="desc">Descending</option>
+      <option value="asc">Ascending</option>
+    </select>
+  </div>
+
+  <div class="filters__actions">
+    <button type="submit">Apply</button>
+    <button type="button" class="filters__reset" (click)="resetFilters()">Reset</button>
+  </div>
+</form>

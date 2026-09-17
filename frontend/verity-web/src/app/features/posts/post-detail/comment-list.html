@@ -1,0 +1,22 @@
+<section class="comment-list" aria-label="Comments">
+  @if (comments().length === 0) {
+    <app-empty-state message="Be the first to comment." />
+  } @else {
+    <ul class="comment-list__items">
+      @for (comment of comments(); track comment.id) {
+        <li class="comment">
+          <div class="comment__meta">
+            <span class="comment__author">{{ comment.author.username }}</span>
+            <span aria-hidden="true">&middot;</span>
+            <span>{{ comment.createdAt | relativeDate }}</span>
+          </div>
+          <p class="comment__body">{{ comment.body }}</p>
+        </li>
+      }
+    </ul>
+
+    @if (totalPages() > 1) {
+      <app-pagination [page]="page()" [totalPages]="totalPages()" (pageChange)="pageChange.emit($event)" />
+    }
+  }
+</section>

@@ -1,0 +1,18 @@
+<header class="header">
+  <a class="header__brand" routerLink="/posts">Verity</a>
+
+  <nav class="header__nav">
+    @if (authStore.isAuthenticated()) {
+      <a routerLink="/posts/new" class="header__link">New post</a>
+      <span class="header__user">{{ authStore.user()?.username }}</span>
+      <button type="button" class="header__link header__link--button" (click)="logout()">Log out</button>
+    } @else {
+      <a routerLink="/login" class="header__link">Log in</a>
+      <a routerLink="/register" class="header__link">Register</a>
+    }
+  </nav>
+</header>
+
+<main class="main">
+  <router-outlet />
+</main>

@@ -1,0 +1,31 @@
+<div class="auth-form">
+  <h1>Log in</h1>
+
+  @if (sessionExpired) {
+    <p class="auth-form__notice" role="status">Your session expired, please log in again.</p>
+  }
+
+  @if (formError()) {
+    <p class="auth-form__error" role="alert">{{ formError()?.title }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="auth-form__field">
+      <label for="username">Username</label>
+      <input id="username" type="text" formControlName="username" autocomplete="username" />
+      <app-validation-message [control]="form.controls.username" />
+    </div>
+
+    <div class="auth-form__field">
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" autocomplete="current-password" />
+      <app-validation-message [control]="form.controls.password" />
+    </div>
+
+    <button type="submit" [disabled]="submitting()">
+      {{ submitting() ? 'Logging in…' : 'Log in' }}
+    </button>
+  </form>
+
+  <p class="auth-form__switch">No account? <a routerLink="/register">Register</a></p>
+</div>

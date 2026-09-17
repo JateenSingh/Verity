@@ -1,0 +1,11 @@
+<button
+  type="button"
+  class="like-button"
+  [class.like-button--liked]="liked()"
+  [disabled]="disabled() || pending()"
+  [attr.title]="title() || null"
+  [attr.aria-pressed]="liked()"
+  (click)="toggle.emit()"
+>
+  {{ liked() ? '♥' : '♡' }} {{ count() }} {{ count() === 1 ? 'like' : 'likes' }}
+</button>

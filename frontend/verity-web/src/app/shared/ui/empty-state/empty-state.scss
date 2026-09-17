@@ -1,0 +1,15 @@
+.empty-state {
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--color-text-muted);
+}
+
+.empty-state__action {
+  margin-top: var(--space-3);
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

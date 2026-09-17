@@ -1,0 +1,33 @@
+<h1>Posts</h1>
+
+<app-post-filters [initialValue]="initialFilters" (apply)="onApplyFilters($event)" (reset)="onResetFilters()" />
+
+@switch (store.status()) {
+  @case ('loading') {
+    <div class="post-list__loading" aria-busy="true">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="post-list__skeleton"></div>
+      }
+    </div>
+  }
+  @case ('error') {
+    <app-alert
+      [title]="store.error()?.title ?? 'Something went wrong'"
+      [detail]="store.error()?.detail"
+      [showRetry]="true"
+      (retry)="onRetry()"
+    />
+  }
+  @default {
+    @if (store.page(); as page) {
+      @if (page.items.length === 0) {
+        <app-empty-state message="No posts match these filters." actionLabel="Reset filters" (action)="onResetFilters()" />
+      } @else {
+        @for (post of page.items; track post.id) {
+          <app-post-card [post]="post" />
+        }
+        <app-pagination [page]="page.page" [totalPages]="page.totalPages" (pageChange)="onPageChange($event)" />
+      }
+    }
+  }
+}
