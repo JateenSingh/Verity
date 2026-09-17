@@ -24,7 +24,19 @@ This builds and starts Postgres, the API and the web client, applies migrations,
 
 ### Seed accounts
 
-The seeder creates seven demo accounts — two moderators and five regular users — sharing one password taken from `SEED_PASSWORD`. The usernames are defined in [`DbSeeder.cs`](backend/src/Verity.Infrastructure/Seed/DbSeeder.cs) and the default password in [`.env.example`](.env.example). Sign in as a moderator to exercise the tagging flows, or as a regular user for the standard experience; one regular user deliberately has no posts, which exercises the empty author-filter case.
+The seeder creates seven demo accounts sharing one password. With the default `.env` settings the password is **`demo-only-password-1`**.
+
+| Username | Role |
+|---|---|
+| `mod_alice` | Moderator |
+| `mod_bob` | Moderator |
+| `jateen` | User |
+| `partner_acme` | User |
+| `partner_globex` | User |
+| `sipho` | User |
+| `naledi` | User (no posts — exercises the empty author-filter case) |
+
+Sign in as a moderator to exercise the tagging flows, or as a regular user for the standard experience. The full account definitions are in [`DbSeeder.cs`](backend/src/Verity.Infrastructure/Seed/DbSeeder.cs); the password is set via `SEED_PASSWORD` (see [`.env.example`](.env.example) and the env vars table below).
 
 These accounts are throwaway fixtures for a local database. Seeding only runs against an empty database, so changing `SEED_PASSWORD` after the first run requires `docker compose down -v` to take effect.
 
