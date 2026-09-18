@@ -105,7 +105,7 @@ npm test -- --watch=false
 
 ## API documentation
 
-- **Postman**: import [`docs/postman/Verity.postman_collection.json`](docs/postman/Verity.postman_collection.json) and [`docs/postman/Verity.local.postman_environment.json`](docs/postman/Verity.local.postman_environment.json). Run folders `00`–`05` in order for a full pass (47 assertions); run `06 Rate limit` separately with the Collection Runner set to 11 iterations to see the auth rate limit trip.
+- **Postman**: open the [published Postman collection](https://www.postman.com/jateensinghza-9304462/workspace/72743e6d-8643-467f-b5b0-65d6e37ccf91/collection/58321191-e8bb4392-c610-4063-bb20-b7826fd76d50?action=share&source=copy-link&creator=58321191) (no login required), or import [`docs/postman/Verity.postman_collection.json`](docs/postman/Verity.postman_collection.json) and [`docs/postman/Verity.local.postman_environment.json`](docs/postman/Verity.local.postman_environment.json). Run folders `00`–`05` in order for a full pass (47 assertions); run `06 Rate limit` separately with the Collection Runner set to 11 iterations to see the auth rate limit trip.
 - **OpenAPI**: served live at `/openapi/v1.json` whenever the API is running in Development.
 - **Versioning**: URL-segment (`/api/v1/...`), via `Asp.Versioning.Mvc`. A `v2` would live alongside `v1` under `/api/v2/...`.
 - **Auth in four lines**: `POST /api/v1/auth/register` or `POST /api/v1/auth/login` returns `{ accessToken, tokenType, expiresAt, user }`. Send `Authorization: Bearer <accessToken>` on every subsequent request that needs it. Tokens last 60 minutes; there's no refresh flow yet (see Known limitations). The same flow works identically for the web client and any third-party consumer.
